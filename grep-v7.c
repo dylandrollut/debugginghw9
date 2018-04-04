@@ -417,6 +417,17 @@ char *file;
 
 /*
 
+advance takes two char pointers, lp and ep. lp is the pointer to the current
+line in the current index, and ep is a pointer to the expbuf. The format of lp
+is the raw text of the line, such as "the quick brown fox jumped over the lazy
+dog." The format of ep is of the output format refered to in the compile
+comment, with the special constants and their appropriate following characters,
+or lack thereof. 
+
+The advance routine calls itself for any portion of the regex that uses the
+special character '*'. Using the recursive calls ensures that 0 or more of
+whatever character is being matched is in the line.
+
 */
 advance(lp, ep)
 register char *lp, *ep;
@@ -535,6 +546,9 @@ register char *lp, *ep;
 
 /*
 
+succeed takes in the name of the file currently being executed. It checks the
+flags and prints the output for grep based on the behavior the flag represents.
+
 */
 succeed(f)
 char *f;
@@ -563,6 +577,9 @@ char *f;
 
 /*
 
+The purpose of ecmp is to make sure that two sections of the line referencing 
+the same regex group have the same characters.
+
 */
 ecmp(a, b, count)
 char	*a, *b;
@@ -574,6 +591,9 @@ char	*a, *b;
 }
 
 /*
+
+errexit takes the string given to it and prints it to standard error and then
+exits the code with a status of 2, ending the program.
 
 */
 errexit(s, f)
