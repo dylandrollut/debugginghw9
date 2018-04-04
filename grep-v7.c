@@ -334,6 +334,24 @@ char *astr;
 
 /*
 
+execute takes in a char pointer that contains a file name and, if file is not
+null, attempts to open the file read and set it to stdin, sending errexit if
+the open is unsucessful. The routine then reads in lines from stdin and sends
+the pointer to linebuf and a pointer to expbuf into the advance routine in an
+if statement. If advance returns true, the routine jumps to found and calls
+succeed if the vflag isn't raised. If the line doesn't match the expression,
+the routine jumps to nfound, which only calls succeed if vflag has been raised.
+
+execute can read in multiple files due to how it points to the expression and
+how the lines are read in. Everytime execute is called, a new pointer to expbuf
+is created and the each line read in overwrites the previous line in the
+linebuf, for lines in the same file and in different files.
+
+The arguments after the regex in argv are treated as file names when working
+with execute. If no file name is given, a null char pointer is passed in, which
+skips the freopen call. Instead, the command prompt waits for user input for 
+the stdin, requiring a EOF signal to end.
+
 */
 execute(file)
 char *file;
