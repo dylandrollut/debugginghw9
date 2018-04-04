@@ -211,8 +211,8 @@ space representing an index:
 	input	1: c . . e
 	output	1: CCHR c CDOT CDOT CCHR e
 
-	input	2:
-	output	2:
+	input	2: \ ( c a s e \ )
+	output	2: CBRA 1 CCHR c CCHR a CCHR s CCHR e CKET 1
 
 */
 compile(astr)
